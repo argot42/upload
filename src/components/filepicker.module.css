@@ -1,0 +1,31 @@
+.hiddenInput > input {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.hiddenInput {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  overflow: hidden;
+  background: center center no-repeat;
+  background-size: 75% 75%;
+  background-image: url("upload.png");
+  background-color: #e3dac9;
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+
+.button {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}

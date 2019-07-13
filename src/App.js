@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FilePicker from './components/filepicker';
 import FileTable from './components/filetable';
+import "./App.css";
 
 class App extends Component {
     state = {
