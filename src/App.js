@@ -30,7 +30,11 @@ class App extends Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state.files);
+        var files = this.state.files.map((file) => {
+            return file.name;
+        });
+
+        alert(files);
     }
 
     handleDelete = (fileId) => {

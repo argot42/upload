@@ -1,0 +1,21 @@
+.content {
+    position: absolute;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: -1;
+    width: 100%;
+}
+
+.content>ul {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.content>ul>li {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
