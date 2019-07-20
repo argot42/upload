@@ -13,7 +13,7 @@ const FilePicker = (props) => {
                 }} multiple />
             </span>
             <br />
-            <button className={styles.button} onClick={onSubmit}>upload!</button>
+            <button className={styles.button} onClick={onSubmit}>upload !</button>
         </div>
     );
 }

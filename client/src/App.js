@@ -30,11 +30,23 @@ class App extends Component {
     }
 
     handleSubmit = () => {
-        var files = this.state.files.map((file) => {
-            return file.name;
-        });
+        const data = new FormData();
 
-        alert(files);
+        for (var file of this.state.files) {
+            data.append(file.name, file);
+        }
+
+        fetch('/upload', {
+            method: 'POST',
+            mode: 'same-origin',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: data
+        })
+        .then(response => {
+            alert(response);
+        });
     }
 
     handleDelete = (fileId) => {
