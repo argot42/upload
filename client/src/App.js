@@ -38,14 +38,12 @@ class App extends Component {
 
         fetch('/upload', {
             method: 'POST',
-            mode: 'same-origin',
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
             body: data
         })
         .then(response => {
-            alert(response);
+            console.log(response)
+        }, (e) => {
+            console.log(e)
         });
     }
 
