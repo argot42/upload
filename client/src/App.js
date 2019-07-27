@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import FilePicker from './components/filepicker';
 import FileTable from './components/filetable';
+import ProgressBar from './components/progressbar';
 import "./App.css";
 
 class App extends Component {
     state = {
-        files: []
+        files: [],
+        percentComplete: 0,
     }
 
     render() {
         return (
             <React.Fragment>
+                <ProgressBar 
+                    percentage={this.state.percentComplete} />
                 <FilePicker 
                     onSubmit={this.handleSubmit}
                     onChange={this.handleChange} />
@@ -36,15 +40,20 @@ class App extends Component {
             data.append(file.name, file);
         }
 
-        fetch('/upload', {
-            method: 'POST',
-            body: data
-        })
-        .then(response => {
-            console.log(response)
-        }, (e) => {
-            console.log(e)
-        });
+        var XHR = new XMLHttpRequest();
+        XHR.open('POST', '/upload', true); // async = true
+        XHR.onreadystatechange = () => {
+            if (XHR.readyState === 4 && XHR.status === 200) {
+                this.setState({ files: [] });
+            }
+        }
+        XHR.upload.addEventListener('progress', (e) => {
+            if (e.lengthComputable) {
+                var percentComplete = Math.round(e.loaded * 100 / e.total);
+                this.setState({ percentComplete: percentComplete });
+            }
+        }, false);
+        XHR.send(data);
     }
 
     handleDelete = (fileId) => {

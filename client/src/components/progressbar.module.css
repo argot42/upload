@@ -1,0 +1,11 @@
+.container {
+    height: 5px;
+    width: 100%;
+}
+
+.bar {
+    height: 100%;
+    background-color: black;
+    transition: width .2s ease-in;
+}
+

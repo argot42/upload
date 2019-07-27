@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func TestCopyPartFile(t *testing.T) {
+func TestCreateNewFile(t *testing.T) {
 	filename0 := "foo.txt"
 	filename1 := "bar"
 
@@ -85,7 +85,7 @@ func TestSaveFiles(t *testing.T) {
 
 	reader = strings.NewReader(s)
 	multipartReader = multipart.NewReader(reader, "foo")
-	err := saveFiles(multipartReader)
+	err := saveFiles(multipartReader, ".")
 	if err != nil {
 		t.Fatal(err)
 	}

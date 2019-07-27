@@ -29,4 +29,5 @@ yarn-error.log*
 # compilation
 /public
 /app
+/files
 upload

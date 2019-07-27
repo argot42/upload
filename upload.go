@@ -39,8 +39,11 @@ func upload(w http.ResponseWriter, r *http.Request, uploadDir string) {
 
 		if err = saveFiles(reader, uploadDir); err != nil {
 			fmt.Fprintln(os.Stderr, "error getting files:", err)
+			http.Error(w, "Error while getting one of the files", http.StatusInternalServerError)
 			return
 		}
+
+		http.Error(w, "Files uploaded", http.StatusOK)
 	}
 }
 
@@ -61,8 +64,6 @@ func saveFiles(r *multipart.Reader, dir string) error {
 		}
 		filePath := filepath.Join(absoluteDir, part.FileName())
 
-		log.Println("saving", part.FileName(), "at", absoluteDir)
-
 		// create new file with non colliding filename
 		file, err := createNewFile(filePath)
 		if err != nil {
@@ -74,6 +75,8 @@ func saveFiles(r *multipart.Reader, dir string) error {
 		if err != nil {
 			return err
 		}
+
+		log.Println("file saved:", file.Name())
 
 		// close part
 		err = part.Close()
@@ -89,15 +92,16 @@ func saveFiles(r *multipart.Reader, dir string) error {
 	return nil
 }
 
-func createNewFile(filename string) (newFile *os.File, err error) {
-	if _, err = os.Stat(filename); os.IsNotExist(err) {
-		newFile, err = os.Create(filename)
+func createNewFile(path string) (newFile *os.File, err error) {
+	if _, err = os.Stat(path); os.IsNotExist(err) {
+		newFile, err = os.Create(path)
 		if err != nil {
 			return nil, err
 		}
 	} else {
+		dir, filename, ext := utils.SplitPath(path)
 		timestamp := strconv.FormatInt(time.Now().Unix(), 10)
-		newFile, err = os.Create(timestamp + "_" + filename)
+		newFile, err = os.Create(filepath.Join(dir, filename+"_"+timestamp+ext))
 		if err != nil {
 			return nil, err
 		}
